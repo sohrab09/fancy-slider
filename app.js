@@ -10,10 +10,10 @@ let sliders = [];
 // Press Enter for search 
 
 document.getElementById("search")
-.addEventListener("keypress", function (event) {
-  if (event.key === "Enter")
-    document.getElementById("search-btn").click();
-});
+  .addEventListener("keypress", function (event) {
+    if (event.key === "Enter")
+      document.getElementById("search-btn").click();
+  });
 
 // If this key doesn't work
 // Find the name in the url and go to their website
@@ -28,21 +28,29 @@ const showImages = (images) => {
   galleryHeader.style.display = 'flex';
   images.forEach(image => {
     let div = document.createElement('div');
-    div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
-    div.id =`${image.webformatURL}`;
+    div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2'
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div)
   })
-
 }
 
-// After Pressing Enter Button Show Images 
-
 const getImages = (query) => {
-  fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
+  let inputData = document.getElementById("search").value;
+  if (inputData == "") {
+    document.getElementById("search-item").innerHTML= `
+    <div class = "row text-center">
+      <div class="col-md-12 text-danger mt-5">
+        <h2>Sorry Sir! Please Put Something on search box.</h2> 
+      </div>
+    </div>
+    `;
+  }
+  else{
+    fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
     .catch(err => console.log(err))
+  }
 }
 
 let slideIndex = 0;
@@ -54,7 +62,6 @@ const selectItem = (event, img) => {
   if (item === -1) {
     sliders.push(img);
   } else {
-    document.getElementById(img).style.display="none";
     alert('Hey, Already added !')
   }
 }
@@ -65,14 +72,14 @@ const createSlider = () => {
     alert('Select at least 2 image.')
     return;
   }
+ 
   // Condition for Check Negative Value 
-  
+
   let durationValue = document.getElementById('duration').value;
   if (durationValue < 1) {
     alert("Please insert a positive value more then 1 & Negative value is not allowed.")
     return;
   }
-  
   // crate slider previous next area
   sliderContainer.innerHTML = '';
   const prevNext = document.createElement('div');
