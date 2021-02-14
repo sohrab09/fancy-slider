@@ -39,8 +39,9 @@ const getImages = (query) => {
   if (inputData == "") {
     document.getElementById("search-item").innerHTML= `
     <div class = "row text-center">
-      <div class="col-md-12 text-danger mt-5">
-        <h2>Sorry Sir! Please Put Something on search box.</h2> 
+      <div class="col-md-12 text-success mt-5">
+        <h2>Sorry Sir! Please Put Something on search box and</h2> 
+        <h2>Reload the page. 🙂</h2> 
       </div>
     </div>
     `;
